@@ -2,14 +2,14 @@ const productos = {
   ofertas: [
     {
       nombre: "Micrófono Pro",
-      img: "../../../Imagenes/microfono inalabricos.png",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/microfono inalabricos.png",
       descripcion: "Micrófono inalámbrico de alta fidelidad.",
       precio: 2200,
       detalle: "detalles/Micrófono Pro.html"
     },
     {
       nombre: "Luces Beam 230",
-      img: "../../../Imagenes/luces beam.jpg",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/luces beam.jpg",
       descripcion: "Luces profesionales para escenarios.",
       precio: 2850,
       detalle: "detalles/Luces Beam 230 .html"
@@ -18,14 +18,14 @@ const productos = {
   vendidos: [
     {
       nombre: "NExo bajo",
-      img: "../../../Imagenes/nexo bajo.jpeg",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/nexo bajo.jpeg",
       descripcion: "Subwoofer Nexo de alto rendimiento.",
       precio: 3200,
       detalle: "detalles/NExo bajo.html"
     },
     {
       nombre: "Estudio Mixer",
-      img: "../../../Imagenes/estudio mixer.jpg",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/estudio mixer.jpg",
       descripcion: "Mixer profesional para estudios y conciertos.",
       precio: 4100,
       detalle: "detalles/studio mixer.html"
@@ -34,14 +34,14 @@ const productos = {
   nuevos: [
     {
       nombre: "Estructura Modular",
-      img: "../../../Imagenes/andamiso layer.jpg",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/andamiso layer.jpg",
       descripcion: "Andamio modular ideal para eventos.",
       precio: 3600,
       detalle: "detalles/Andamio modular.html"
     },
     {
       nombre: "Mini Escenario",
-      img: "../../../Imagenes/escenario.png",
+      img: "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/escenario.png",
       descripcion: "Escenario compacto para presentaciones pequeñas.",
       precio: 2500,
       detalle: "detalles/Escenario compacto.html"
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleCarritoBtn.style.zIndex = "1002";
 
   const carritoImg = document.createElement("img");
-  carritoImg.src = "../../../Imagenes/carrito.png";
+  carritoImg.src = "LOS-EUROS-SONIDO-E-ILUMINACION/Imagenes/carrito.png";
   carritoImg.alt = "Carrito";
   carritoImg.style.width = "30px";
   carritoImg.style.height = "30px";
