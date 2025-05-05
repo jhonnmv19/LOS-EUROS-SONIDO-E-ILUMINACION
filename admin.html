@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrador - Los Euros</title>
+  <link rel="stylesheet" href="Estilos/Style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fefae2;
+      color: #620f14;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #a4202e;
+      margin-top: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: 40px;
+      padding: 10px;
+      background-color: #e7b263;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #e7b263;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .boton-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #a4202e;
+  color: #fefae2;
+  padding: 12px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+}
+
+.boton-flotante:hover {
+  background-color: #620f14;
+  transform: scale(1.05);
+}
+
+    .cliente-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.cliente-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card-cliente {
+  display: flex;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.cliente-foto {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 2px solid #ccc;
+}
+
+.cliente-info {
+  flex: 1;
+}
+
+.cliente-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #222;
+}
+
+.cliente-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.empleado-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card-empleado {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 280px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card-empleado:hover {
+      transform: translateY(-5px);
+    }
+
+    .empleado-foto {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 3px solid #e7b263;
+    }
+
+    .empleado-info h3 {
+      margin: 10px 0 5px;
+      color: #a4202e;
+    }
+
+    .empleado-info p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #333;
+    }
+/* RESPONSIVE: 2 columnas para móviles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 6px;
+  }
+
+  .cliente-cards, .empleado-cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+  }
+
+  .card-cliente, .card-empleado {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cliente-foto, .empleado-foto {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .cliente-cards, .empleado-cards {
+    grid-template-columns: repeat(2, 1fr); /* Siempre 2 columnas */
+  }
+
+  .boton-flotante {
+    font-size: 12px;
+    padding: 8px 10px;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+  </style>
+</head>
+<!-- ... Tu encabezado HTML sigue igual ... -->
+
+
+
+  <div class="container">
+    <h1>Panel del Administrador - Los Euros</h1>
+
+    <section>
+      <h2>📊 Reporte de Ventas (Resumen)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID Cliente</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>ID Producto</th>
+            <th>Nombre del Producto</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>Juan</td>
+            <td>Pérez</td>
+            <td>P001</td>
+            <td>Line Array LA120</td>
+            <td>2</td>
+            <td>$5.399.800</td>
+          </tr>
+          <tr>
+            <td>002</td>
+            <td>María</td>
+            <td>Gómez</td>
+            <td>P002</td>
+            <td>Mezclador Digital X32</td>
+            <td>1</td>
+            <td>$8.490.000</td>
+          </tr>
+          <tr>
+            <td>003</td>
+            <td>Carlos</td>
+            <td>Ramírez</td>
+            <td>P003</td>
+            <td>Cables XLR Pack 10m</td>
+            <td>5</td>
+            <td>$1.249.500</td>
+          </tr>
+          <tr>
+            <td>004</td>
+            <td>Lucía</td>
+            <td>Fernández</td>
+            <td>P004</td>
+            <td>Audífonos Studio HD200</td>
+            <td>3</td>
+            <td>$597.000</td>
+          </tr>
+          <tr>
+            <td>005</td>
+            <td>Andrés</td>
+            <td>Lozano</td>
+            <td>P005</td>
+            <td>Procesador de Efectos FX2000</td>
+            <td>1</td>
+            <td>$849.000</td>
+          </tr>
+          <tr>
+            <td>006</td>
+            <td>Sofía</td>
+            <td>Navarro</td>
+            <td>P006</td>
+            <td>Cables Speakon 10m</td>
+            <td>4</td>
+            <td>$636.000</td>
+          </tr>
+          <tr>
+            <td>007</td>
+            <td>Fernando</td>
+            <td>Méndez</td>
+            <td>P007</td>
+            <td>Amplificador Potencia Q1000</td>
+            <td>2</td>
+            <td>$2.780.000</td>
+          </tr>
+          <tr>
+            <td>008</td>
+            <td>Valentina</td>
+            <td>Herrera</td>
+            <td>P008</td>
+            <td>Micrófono de Instalación MIC300</td>
+            <td>3</td>
+            <td>$747.000</td>
+          </tr>
+          
+          <!-- Más ventas -->
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>🔥 Productos más vendidos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad Vendida</th>
+            <th>Total Generado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vortex Spot 150W</td>
+            <td>Iluminación</td>
+            <td>$1.799.900</td>
+            <td>50</td>
+            <td>$89.995.000</td>
+          </tr>
+          <tr>
+            <td>Borealis 3x2</td>
+            <td>Audio</td>
+            <td>$7.490.000</td>
+            <td>35</td>
+            <td>$262.150.000</td>
+          </tr>
+          <tr>
+            <td>Line Array LA120</td>
+            <td>Parlantes</td>
+            <td>$2.699.900</td>
+            <td>20</td>
+            <td>$53.998.000</td>
+          </tr>
+          <tr>
+            <td>Mezclador Digital X32</td>
+            <td>Consolas - Mezcladores</td>
+            <td>$8.490.000</td>
+            <td>15</td>
+            <td>$127.350.000</td>
+          </tr>
+          <tr>
+            <td>Cables XLR Pack 10m</td>
+            <td>Cables - Multipar - Conectores</td>
+            <td>$249.900</td>
+            <td>40</td>
+            <td>$9.996.000</td>
+          </tr>
+          <tr>
+            <td>Audífonos Studio HD200</td>
+            <td>Audífonos</td>
+            <td>$199.000</td>
+            <td>25</td>
+            <td>$4.975.000</td>
+          </tr>
+          <tr>
+            <td>Sub-Bajo Thunder 800</td>
+            <td>Sub-Bajos</td>
+            <td>$3.290.000</td>
+            <td>10</td>
+            <td>$32.900.000</td>
+          </tr>
+          <tr>
+            <td>Mezclador Análogo MX802</td>
+            <td>Mezcladores Análogos</td>
+            <td>$599.000</td>
+            <td>18</td>
+            <td>$10.782.000</td>
+          </tr>
+          <tr>
+            <td>Procesador de Efectos FX2000</td>
+            <td>Procesadores de Señal y Efectos</td>
+            <td>$849.000</td>
+            <td>11</td>
+            <td>$9.339.000</td>
+          </tr>
+          <tr>
+            <td>Cables Speakon 10m</td>
+            <td>Cables Speakon</td>
+            <td>$159.000</td>
+            <td>34</td>
+            <td>$5.406.000</td>
+          </tr>
+          <tr>
+            <td>Amplificador Potencia Q1000</td>
+            <td>Amplificadores</td>
+            <td>$1.390.000</td>
+            <td>9</td>
+            <td>$12.510.000</td>
+          </tr>
+          <tr>
+            <td>Micrófono de Instalación MIC300</td>
+            <td>Micrófonos Instalación</td>
+            <td>$249.000</td>
+            <td>21</td>
+            <td>$5.229.000</td>
+          </tr>
+          <tr>
+            <td>Parlante Columna SC-200</td>
+            <td>Sistemas de Columna</td>
+            <td>$1.890.000</td>
+            <td>7</td>
+            <td>$13.230.000</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </section>
+    
+
+    <section>
+      <h2>🧑‍💼 Empleados</h2>
+      <div class="empleado-cards">
+  
+        <div class="card-empleado">
+          <img src="Imagenes/Laura Martínez.jpeg" alt="Foto de Laura Martínez" class="empleado-foto" />
+          <div class="empleado-info">
+            <h3>Laura Martínez</h3>
+            <p><strong>Cargo:</strong> Ventas</p>
+            <p><strong>Edad:</strong> 32</p>
+            <p><strong>Email:</strong> laura.martinez@email.com</p>
+            <p><strong>Estado:</strong> Libre</p>
+            <p><strong>Hora Entrada:</strong> 08:00</p>
+            <p><strong>Hora Salida:</strong> 16:00</p>
+          </div>
+        </div>
+  
+        <div class="card-empleado">
+          <img src="Imagenes/Diego González.jpg" alt="Foto de Diego González" class="empleado-foto" />
+          <div class="empleado-info">
+            <h3>Diego González</h3>
+            <p><strong>Cargo:</strong> Soporte Técnico</p>
+            <p><strong>Edad:</strong> 29</p>
+            <p><strong>Email:</strong> diego.gonzalez@email.com</p>
+            <p><strong>Estado:</strong> Vacaciones</p>
+            <p><strong>Hora Entrada:</strong> 08:00</p>
+            <p><strong>Hora Salida:</strong> 17:30 </p>
+          </div>
+        </div>
+  
+        <div class="card-empleado">
+          <img src="Imagenes/Ana Torres.jpg" alt="Foto de Ana Torres" class="empleado-foto" />
+          <div class="empleado-info">
+            <h3>Ana Torres</h3>
+            <p><strong>Cargo:</strong> Instalaciones</p>
+            <p><strong>Edad:</strong> 40</p>
+            <p><strong>Email:</strong> ana.torres@email.com</p>
+            <p><strong>Estado:</strong> Libre</p>
+            <p><strong>Hora Entrada:</strong> 09:00</p>
+            <p><strong>Hora Salida:</strong> 17:00</p>
+          </div>
+        </div>
+  
+        <div class="card-empleado">
+          <img src="Imagenes/José Morales.jpeg" alt="Foto de José Morales" class="empleado-foto" />
+          <div class="empleado-info">
+            <h3>José Morales</h3>
+            <p><strong>Cargo:</strong> Logística</p>
+            <p><strong>Edad:</strong> 37</p>
+            <p><strong>Email:</strong> jose.morales@email.com</p>
+            <p><strong>Estado:</strong> Libre</p>
+            <p><strong>Hora Entrada:</strong> 07:30</p>
+            <p><strong>Hora Salida:</strong> 15:30</p>
+          </div>
+        </div>
+  
+      </div>
+    </section>
+
+  
+    <section>
+      <h2>👤 Perfiles de Clientes</h2>
+      <div class="cliente-cards">
+        <div class="card-cliente">
+          <img src="Imagenes/Juan Pérez.jpg" alt="Foto de Juan Pérez" class="cliente-foto" />
+          <div class="cliente-info">
+            <h3>Juan Pérez</h3>
+            <p><strong>ID:</strong> 001</p>
+            <p><strong>Edad:</strong> 35</p>
+            <p><strong>Teléfono:</strong> (555) 123-4567</p>
+            <p><strong>Email:</strong> juan.perez@email.com</p>
+            <p><strong>Ciudad:</strong> Madrid, España</p>
+          </div>
+        </div>
+          <div class="card-cliente">
+            <img src="Imagenes/María Gómez.jpeg" alt="Foto de María Gómez" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>María Gómez</h3>
+              <p><strong>ID:</strong> 002</p>
+              <p><strong>Edad:</strong> 28</p>
+              <p><strong>Teléfono:</strong> (555) 234-5678</p>
+              <p><strong>Email:</strong> maria.gomez@email.com</p>
+              <p><strong>Ciudad:</strong> Barcelona, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Carlos Ramírez.jpeg" alt="Foto de Carlos Ramírez" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Carlos Ramírez</h3>
+              <p><strong>ID:</strong> 003</p>
+              <p><strong>Edad:</strong> 35</p>
+              <p><strong>Teléfono:</strong> (555) 345-6789</p>
+              <p><strong>Email:</strong> carlos.ramirez@email.com</p>
+              <p><strong>Ciudad:</strong> Sevilla, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Lucía Fernández.jpeg" alt="Foto de Lucía Fernández" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Lucía Fernández</h3>
+              <p><strong>ID:</strong> 004</p>
+              <p><strong>Edad:</strong> 25</p>
+              <p><strong>Teléfono:</strong> (555) 456-7890</p>
+              <p><strong>Email:</strong> lucia.fernandez@email.com</p>
+              <p><strong>Ciudad:</strong> Valencia, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Andrés Lozano.jpeg" alt="Foto de Andrés Lozano" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Andrés Lozano</h3>
+              <p><strong>ID:</strong> 005</p>
+              <p><strong>Edad:</strong> 38</p>
+              <p><strong>Teléfono:</strong> (555) 567-8910</p>
+              <p><strong>Email:</strong> andres.lozano@email.com</p>
+              <p><strong>Ciudad:</strong> Bilbao, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Sofía Navarro.jpeg" alt="Foto de Sofía Navarro" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Sofía Navarro</h3>
+              <p><strong>ID:</strong> 006</p>
+              <p><strong>Edad:</strong> 27</p>
+              <p><strong>Teléfono:</strong> (555) 678-9123</p>
+              <p><strong>Email:</strong> sofia.navarro@email.com</p>
+              <p><strong>Ciudad:</strong> Granada, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Fernando Méndez.jpeg" alt="Foto de Fernando Méndez" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Fernando Méndez</h3>
+              <p><strong>ID:</strong> 007</p>
+              <p><strong>Edad:</strong> 41</p>
+              <p><strong>Teléfono:</strong> (555) 789-1234</p>
+              <p><strong>Email:</strong> fernando.mendez@email.com</p>
+              <p><strong>Ciudad:</strong> Málaga, España</p>
+            </div>
+          </div>
+      
+          <div class="card-cliente">
+            <img src="Imagenes/Valentina Herrera.jpeg" alt="Foto de Valentina Herrera" class="cliente-foto" />
+            <div class="cliente-info">
+              <h3>Valentina Herrera</h3>
+              <p><strong>ID:</strong> 008</p>
+              <p><strong>Edad:</strong> 33</p>
+              <p><strong>Teléfono:</strong> (555) 890-2345</p>
+              <p><strong>Email:</strong> valentina.herrera@email.com</p>
+              <p><strong>Ciudad:</strong> Zaragoza, España</p>
+            </div>
+          </div>
+        </div>
+        <!-- Repite esta tarjeta por cada cliente -->
+      </div>
+    </section>
+
+    <a href="index.html" class="boton-flotante">Volver al inicio</a>
+
+  </div>
+
+
+  <script>
+    // Simulación de datos cargados desde localStorage (sin cambios)
+    const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+    const contenedor = document.getElementById("reporte-ventas");
+
+    if (ventas.length === 0) {
+      contenedor.innerHTML = "<p>No hay ventas registradas.</p>";
+    } else {
+      contenedor.innerHTML = "<ul>" + ventas.map(v => `
+        <li><strong>${v.cliente}</strong> compró <strong>${v.productos.length}</strong> productos. Total: $${v.total}</li>
+      `).join('') + "</ul>";
+    }
+
+    // Simulación de productos más vendidos
+    const productos = JSON.parse(localStorage.getItem("productosVendidos")) || [];
+    const top = document.getElementById("productos-mas-vendidos");
+
+    if (productos.length === 0) {
+      top.innerHTML = "<tr><td colspan='2'>No hay productos vendidos aún.</td></tr>";
+    } else {
+      productos.sort((a, b) => b.cantidad - a.cantidad); // Ordenar por más vendidos
+      top.innerHTML = productos.map(p => `
+        <tr>
+          <td>${p.nombre}</td>
+          <td>${p.cantidad} vendidos</td>
+        </tr>
+      `).join('');
+    }
+  </script>
+
+</body>
+</html>
